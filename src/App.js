@@ -1,16 +1,23 @@
+import { useState } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import './App.css';
 import { Header } from './components';
 import { Home, Login, Register, NotFound } from './pages';
+import './App.css';
 
 function App() {
+  const [isRegistered, setIsRegistered] = useState();
+
+  function toggleRegistered(state) {
+    setIsRegistered(state);
+  }
+
   return (
     <>
-      <Header />
+      <Header isRegistered={isRegistered} />
       <Switch>
-        <Route path="/" exact component={Home} />
-        <Route path="/about" exact component={Login} />
-        <Route path="/contacts" exact component={Register} />
+        <Route path="/" exact component={() => <Home toggleRegistered={toggleRegistered} />} />
+        <Route path="/login" exact component={() => <Login toggleRegistered={toggleRegistered} />} />
+        <Route path="/register" exact component={() => <Register toggleRegistered={toggleRegistered} />} />
         <Route path="*" component={NotFound} />
       </Switch>
     </>
