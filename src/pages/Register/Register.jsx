@@ -2,15 +2,14 @@ import React, { Component } from 'react';
 
 class Register extends Component {
   componentDidMount() {
-    this.props.toggleRegistered(true);
+    const {
+      location: { pathname },
+    } = this.props;
+    this.props.toggleRegistered(pathname === '/register');
   }
 
   render() {
-    return (
-      <main>
-        Register
-      </main>
-    );
+    return <main>Register</main>;
   }
 }
 
