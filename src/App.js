@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { Header } from './components';
-import { Home, LoginRegister, NotFound } from './pages';
-import './App.css';
+import { Header } from 'components';
+import { Home, LoginRegister, NotFound } from 'pages';
+import './App.scss';
 
 function App() {
   const [isRegistered, setIsRegistered] = useState();

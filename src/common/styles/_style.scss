@@ -1,0 +1,10 @@
+$color-white: #fff;
+$color-gray: #4a4e57;
+$color-blue: #3ea9f5;
+$color-cyan: #28d2d0;
+
+.form,
+.header {
+  color: $color-white;
+  background-color: $color-blue;
+}

@@ -1,6 +1,6 @@
 // @ts-check
 import React, { Component } from 'react';
-import { SignForm } from '../../components';
+import { SignForm } from 'components';
 
 export default class LoginRegister extends Component {
   constructor(props) {
@@ -51,9 +51,14 @@ export default class LoginRegister extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <SignForm handleChange={this.handleChange} isRegisterPage={this.isRegisterPage} {...this.state} />
-      </form>
+      <main>
+        <SignForm
+          handleChange={this.handleChange}
+          handleSubmit={this.handleSubmit}
+          isRegisterPage={this.isRegisterPage}
+          {...this.state}
+        />
+      </main>
     );
   }
 }

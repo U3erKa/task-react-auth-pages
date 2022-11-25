@@ -6,7 +6,7 @@ import styles from './SignForm.module.scss';
 export default class SignForm extends Component {
   createInput = (/** @type {string} */ name, /** @type {string} */ placeholder, /** @type {string?} */ type) => (
     <input
-      className={styles.input}
+      className={this.props.isRegisterPage ? styles.inputRegister : styles.inputLogin}
       type={type || name}
       name={name}
       value={this.props[name]}
@@ -15,7 +15,7 @@ export default class SignForm extends Component {
     />
   );
   createCheckbox = (/** @type {string} */ name, /** @type {string} */ placeholder) => (
-    <label>
+    <label className={this.props.isRegisterPage ? styles.inputRegisterCheckbox : styles.inputLoginCheckbox}>
       <input type="checkbox" name={name} checked={this.props[name]} onChange={this.props.handleChange} />
       {placeholder}
     </label>
@@ -26,56 +26,73 @@ export default class SignForm extends Component {
     return isRegisterPage ? (
       <Register createInput={this.createInput} createCheckbox={this.createCheckbox} {...otherProps} />
     ) : (
-      <Login createInput={this.createInput} createCheckbox={this.createCheckbox} />
+      <Login createInput={this.createInput} createCheckbox={this.createCheckbox} {...otherProps} />
     );
   }
 }
 
 export class Register extends Component {
   render() {
-    const { createInput, createCheckbox, handleChange, joinAs } = this.props;
+    const { createInput, createCheckbox, handleChange, handleSubmit, joinAs } = this.props;
     return (
-      <fieldset>
-        <h1>CREATE AN ACCOUNT</h1>
-        <p>We always keep your name and email address private.</p>
-        {createInput('firstName', 'First Name')}
-        {createInput('lastName', 'Last Name')}
-        {createInput('displayName', 'Display Name')}
-        {createInput('email', 'Email Address')}
-        {createInput('password', 'Password')}
-        {createInput('confirmPassword', 'Password Confirmation', 'password')}
-        <label>
-          <input type="radio" name="joinAs" value="buyer" checked={joinAs === 'buyer'} onChange={handleChange} />
-          Join As a Buyer
-          <p>I am looking for a Name, Logo or Tagline for my business, brand or product.</p>
-        </label>
-        <label>
-          <input type="radio" name="joinAs" value="seller" checked={joinAs === 'seller'} onChange={handleChange} />
-          Join As a Creative or Marketplace Seller
-          <p>I plan to submit name ideas, Logo designs or sell names in Domain Marketplace.</p>
-        </label>
-        {createCheckbox('isSpammed', 'Allow Squadhelp to send marketing/promotional offers from time to time')}
-        <button type="submit">Create account</button>
-        <p>
-          By clicking this button, you agree to our <Link to={'/tos'}>Terms of Service.</Link>
-        </p>
-      </fieldset>
+      <form className={styles.form} onSubmit={handleSubmit}>
+        <fieldset className={styles.fieldset}>
+          <h1 className={styles.headingRegister}>CREATE AN ACCOUNT</h1>
+          <p className={styles.subHeading}>We always keep your name and email address private.</p>
+          {createInput('firstName', 'First Name')}
+          {createInput('lastName', 'Last Name')}
+          {createInput('displayName', 'Display Name')}
+          {createInput('email', 'Email Address')}
+          {createInput('password', 'Password')}
+          {createInput('confirmPassword', 'Password Confirmation', 'password')}
+          <label className={styles.label}>
+            <input type="radio" name="joinAs" value="buyer" checked={joinAs === 'buyer'} onChange={handleChange} />
+            Join As a Buyer
+            <p className={styles.labelText}>
+              I am looking for a Name, Logo or Tagline for my business, brand or product.
+            </p>
+          </label>
+          <label className={styles.label}>
+            <input type="radio" name="joinAs" value="seller" checked={joinAs === 'seller'} onChange={handleChange} />
+            Join As a Creative or Marketplace Seller
+            <p className={styles.labelText}>
+              I plan to submit name ideas, Logo designs or sell names in Domain Marketplace.
+            </p>
+          </label>
+          {createCheckbox('isSpammed', 'Allow Squadhelp to send marketing/promotional offers from time to time')}
+          <button type="submit" className={styles.submitBtn}>
+            Create account
+          </button>
+          <p>
+            By clicking this button, you agree to our{' '}
+            <Link to={'/tos'} className={styles.tosLink}>
+              Terms of Service.
+            </Link>
+          </p>
+        </fieldset>
+      </form>
     );
   }
 }
 
 export class Login extends Component {
   render() {
-    const { createInput, createCheckbox } = this.props;
+    const { createInput, createCheckbox, handleSubmit } = this.props;
     return (
-      <fieldset>
-        <h1>LOGIN TO YOUR ACCOUNT</h1>
-        {createInput('email', 'Email Address')}
-        {createInput('password', 'Password')}
-        {createCheckbox('isRemembered', 'Remember me')}
-        <Link to={'/forgot-password'}>Forgot password</Link>
-        <button type="submit">LOGIN</button>
-      </fieldset>
+      <form className={styles.form} onSubmit={handleSubmit}>
+        <fieldset className={styles.fieldset}>
+          <h1 className={styles.headingLogin}>LOGIN TO YOUR ACCOUNT</h1>
+          {createInput('email', 'Email Address')}
+          {createInput('password', 'Password')}
+          {createCheckbox('isRemembered', 'Remember me')}
+          <Link to={'/forgot-password'} className={styles.forgotPasswordLink}>
+            Forgot password
+          </Link>
+          <button type="submit" className={styles.submitBtn}>
+            LOGIN
+          </button>
+        </fieldset>
+      </form>
     );
   }
 }
