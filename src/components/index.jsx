@@ -1,5 +1,4 @@
 import Header from './Header/Header';
-import Login from './Login/Login';
-import Register from './Register/Register';
+import SignForm from './SignForm/SignForm';
 
-export { Header, Login, Register };
+export { Header, SignForm };
