@@ -22,17 +22,28 @@ export default class SignForm extends Component {
   );
 
   render() {
-    const { handleChange, joinAs, isRegisterPage } = this.props;
+    const { isRegisterPage, ...otherProps } = this.props;
     return isRegisterPage ? (
+      <Register createInput={this.createInput} createCheckbox={this.createCheckbox} {...otherProps} />
+    ) : (
+      <Login createInput={this.createInput} createCheckbox={this.createCheckbox} />
+    );
+  }
+}
+
+export class Register extends Component {
+  render() {
+    const { createInput, createCheckbox, handleChange, joinAs } = this.props;
+    return (
       <fieldset>
         <h1>CREATE AN ACCOUNT</h1>
         <p>We always keep your name and email address private.</p>
-        {this.createInput('firstName', 'First Name')}
-        {this.createInput('lastName', 'Last Name')}
-        {this.createInput('displayName', 'Display Name')}
-        {this.createInput('email', 'Email Address')}
-        {this.createInput('password', 'Password')}
-        {this.createInput('confirmPassword', 'Password Confirmation', 'password')}
+        {createInput('firstName', 'First Name')}
+        {createInput('lastName', 'Last Name')}
+        {createInput('displayName', 'Display Name')}
+        {createInput('email', 'Email Address')}
+        {createInput('password', 'Password')}
+        {createInput('confirmPassword', 'Password Confirmation', 'password')}
         <label>
           <input type="radio" name="joinAs" value="buyer" checked={joinAs === 'buyer'} onChange={handleChange} />
           Join As a Buyer
@@ -43,18 +54,25 @@ export default class SignForm extends Component {
           Join As a Creative or Marketplace Seller
           <p>I plan to submit name ideas, Logo designs or sell names in Domain Marketplace.</p>
         </label>
-        {this.createCheckbox('isSpammed', 'Allow Squadhelp to send marketing/promotional offers from time to time')}
+        {createCheckbox('isSpammed', 'Allow Squadhelp to send marketing/promotional offers from time to time')}
         <button type="submit">Create account</button>
         <p>
           By clicking this button, you agree to our <Link to={'/tos'}>Terms of Service.</Link>
         </p>
       </fieldset>
-    ) : (
+    );
+  }
+}
+
+export class Login extends Component {
+  render() {
+    const { createInput, createCheckbox } = this.props;
+    return (
       <fieldset>
         <h1>LOGIN TO YOUR ACCOUNT</h1>
-        {this.createInput('email', 'Email Address')}
-        {this.createInput('password', 'Password')}
-        {this.createCheckbox('isRemembered', 'Remember me')}
+        {createInput('email', 'Email Address')}
+        {createInput('password', 'Password')}
+        {createCheckbox('isRemembered', 'Remember me')}
         <Link to={'/forgot-password'}>Forgot password</Link>
         <button type="submit">LOGIN</button>
       </fieldset>
