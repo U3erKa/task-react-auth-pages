@@ -1,13 +1,13 @@
-import { useState } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { SetStateAction, useState } from 'react';
+import { Switch, Route, RouteProps } from 'react-router-dom';
 import { Header } from 'components';
 import { Home, LoginRegister, NotFound } from 'pages';
 import './App.scss';
 
 function App() {
-  const [isRegistered, setIsRegistered] = useState();
+  const [isRegistered, setIsRegistered] = useState(false);
 
-  function toggleRegistered(state) {
+  function toggleRegistered(state: SetStateAction<boolean>) {
     setIsRegistered(state);
   }
 
@@ -19,12 +19,16 @@ function App() {
         <Route
           path="/login"
           exact
-          component={(routerProps) => <LoginRegister toggleRegistered={toggleRegistered} {...routerProps} />}
+          component={(routerProps: RouteProps) => (
+            <LoginRegister toggleRegistered={toggleRegistered} {...routerProps} />
+          )}
         />
         <Route
           path="/register"
           exact
-          component={(routerProps) => <LoginRegister toggleRegistered={toggleRegistered} {...routerProps} />}
+          component={(routerProps: RouteProps) => (
+            <LoginRegister toggleRegistered={toggleRegistered} {...routerProps} />
+          )}
         />
         <Route path="*" component={NotFound} />
       </Switch>

@@ -1,20 +1,36 @@
-// @ts-check
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { LoginRegisterState } from 'pages/LoginRegister/LoginRegister';
+// @ts-ignore
 import styles from './SignForm.module.scss';
 
-export default class SignForm extends Component {
-  constructor(props) {
+interface SignFormProps extends LoginRegisterState {
+  isRegisterPage?: boolean;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+}
+
+interface LoginProps extends SignFormProps {
+  createInput: (name: string, placeholder: string, type?: string) => JSX.Element;
+  createCheckbox: (name: string, placeholder: string) => JSX.Element;
+}
+interface RegisterProps extends LoginProps {
+  joinAs?: string | undefined;
+}
+
+export default class SignForm extends Component<SignFormProps, any> {
+  constructor(props: SignFormProps) {
     super(props);
     this.state = { passwordType: 'password', confirmPasswordType: 'password' };
   }
-  createInput = (/** @type {string} */ name, /** @type {string} */ placeholder, /** @type {string?} */ type) =>
+  createInput = (name: string, placeholder: string, type?: string) =>
     type === 'password' ? (
       <label className={this.props.isRegisterPage ? styles.labelRegister : styles.labelLogin}>
         <input
           className={this.props.isRegisterPage ? styles.inputRegister : styles.inputLogin}
           type={this.state[`${name}Type`]}
           name={name}
+          // @ts-expect-error
           value={this.props[name]}
           placeholder={placeholder}
           onChange={this.props.handleChange}
@@ -30,18 +46,20 @@ export default class SignForm extends Component {
         className={this.props.isRegisterPage ? styles.inputRegister : styles.inputLogin}
         type={type || name}
         name={name}
+        // @ts-expect-error
         value={this.props[name]}
         placeholder={placeholder}
         onChange={this.props.handleChange}
       />
     );
-  createCheckbox = (/** @type {string} */ name, /** @type {string} */ placeholder) => (
+  createCheckbox = (name: string, placeholder: string) => (
     <label className={this.props.isRegisterPage ? styles.inputRegisterCheckbox : styles.inputLoginCheckbox}>
+      {/* @ts-expect-error */}
       <input type="checkbox" name={name} checked={this.props[name]} onChange={this.props.handleChange} />
       {placeholder}
     </label>
   );
-  toggleInputType(/** @type {string} */ type) {
+  toggleInputType(type: string) {
     this.setState({ [type]: this.state[type] === 'input' ? 'password' : 'input' });
   }
 
@@ -55,7 +73,7 @@ export default class SignForm extends Component {
   }
 }
 
-export class Register extends Component {
+export class Register extends Component<RegisterProps> {
   render() {
     const { createInput, createCheckbox, handleChange, handleSubmit, joinAs } = this.props;
     return (
@@ -99,7 +117,7 @@ export class Register extends Component {
   }
 }
 
-export class Login extends Component {
+export class Login extends Component<LoginProps> {
   render() {
     const { createInput, createCheckbox, handleSubmit } = this.props;
     return (

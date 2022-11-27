@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 
-class Home extends Component {
+interface HomeProps {
+  toggleRegistered: (state: boolean) => void;
+}
+
+class Home extends Component<HomeProps> {
   componentDidMount() {
     this.props.toggleRegistered(true);
   }

@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+// @ts-ignore
 import styles from './Header.module.scss';
+// @ts-ignore
 import logo from 'img/logo.png';
 
-class Header extends Component {
+interface HeaderProps {
+  isRegistered: boolean;
+}
+
+export default class Header extends Component<HeaderProps> {
   render() {
     const { isRegistered } = this.props;
 
@@ -33,5 +39,3 @@ class Header extends Component {
     );
   }
 }
-
-export default Header;
