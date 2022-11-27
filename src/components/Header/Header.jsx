@@ -13,7 +13,7 @@ class Header extends Component {
           <ul className={styles.navList}>
             <li className={styles.navListItem}>
               <Link to={'/'}>
-                <img src={logo} alt="Homepage" />
+                <img className={styles.logo} src={logo} alt="Homepage" />
               </Link>
             </li>
             <li className={styles.navListItem}>

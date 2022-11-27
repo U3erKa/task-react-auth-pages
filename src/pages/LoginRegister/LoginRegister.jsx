@@ -1,5 +1,6 @@
 // @ts-check
 import React, { Component } from 'react';
+// @ts-ignore
 import { SignForm } from 'components';
 
 export default class LoginRegister extends Component {

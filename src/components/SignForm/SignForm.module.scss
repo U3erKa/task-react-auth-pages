@@ -1,15 +1,15 @@
 @import 'common/styles/style';
 
 .form {
-  min-height: calc(100vh - 156px);
+  min-height: calc(100vh - (2 * $navListPadding + $logoHeight + 5px));
 }
 
 .fieldset {
   display: grid;
-  width: 600px;
+  width: $form-width;
   margin: auto;
   grid-template-columns: 1fr 1fr;
-  gap: 20px 30px;
+  gap: calc(2 * $defaultPadding) calc(3 * $defaultPadding);
   border: none;
 
   & > :nth-child(n):not(.inputRegister, .inputLoginCheckbox, .forgotPasswordLink) {
@@ -21,7 +21,7 @@
   &Register,
   &Login {
     text-align: center;
-    margin: 10px 0;
+    margin: $defaultPadding 0;
   }
 
   &Register {
@@ -35,14 +35,14 @@
 .subHeading {
   text-align: center;
   margin: 0;
-  margin-bottom: 10px;
+  margin-bottom: $defaultPadding;
 }
 
 .input {
   &Register,
   &Login {
-    padding: 25px;
-    border-radius: 5px;
+    padding: calc(2.5 * $defaultPadding);
+    border-radius: $borderRadius;
     border: none;
     font-size: 0.8rem;
 
@@ -54,7 +54,7 @@
 
 .label {
   border: 1px solid;
-  padding: 10px 15px;
+  padding: $defaultPadding calc(1.5 * $defaultPadding);
 }
 
 .labelText,
@@ -76,11 +76,11 @@
 }
 
 .submitBtn {
-  padding: 25px;
+  padding: calc(2.5 * $defaultPadding);
   color: $color-white;
   background-color: $color-cyan;
   border: none;
-  border-radius: 5px;
+  border-radius: $borderRadius;
   font-size: 0.8rem;
   font-weight: bold;
 }

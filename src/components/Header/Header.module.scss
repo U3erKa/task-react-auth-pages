@@ -3,14 +3,15 @@
 .navList {
   display: flex;
   justify-content: space-around;
+  align-items: center;
   margin: 0;
-  padding: 50px;
+  padding: $navListPadding;
 
   &Item {
     &Link {
-      padding: 10px 15px;
+      padding: $defaultPadding calc(1.5 * $defaultPadding);
       border: 1px solid;
-      border-radius: 5px;
+      border-radius: $borderRadius;
       color: $color-white;
       text-decoration: none;
       font-size: 1rem;
@@ -20,4 +21,8 @@
   ::marker {
     content: none;
   }
+}
+
+.logo {
+  height: $logoHeight;
 }
