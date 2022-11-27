@@ -6,14 +6,17 @@
 
 .fieldset {
   display: grid;
-  width: $form-width;
+  max-width: $form-width;
   margin: auto;
-  grid-template-columns: 1fr 1fr;
   gap: calc(2 * $defaultPadding) calc(3 * $defaultPadding);
   border: none;
 
-  & > :nth-child(n):not(.inputRegister, .inputLoginCheckbox, .forgotPasswordLink) {
-    grid-column: span 2 / auto;
+  @media (min-width: 578px) {
+    grid-template-columns: 1fr 1fr;
+    
+    & > :nth-child(n):not(.inputRegister, .labelRegister, .inputLoginCheckbox, .forgotPasswordLink) {
+      grid-column: span 2 / auto;
+    }
   }
 }
 
@@ -53,8 +56,34 @@
 }
 
 .label {
+  &Register,
+  &Login {
+    border-radius: $borderRadius;
+    background-color: $color-white;
+
+    & > .input {
+      &Login,
+      &Register {
+        width: 100%;
+      }
+    }
+  }
+}
+
+.passwordBtn {
+  border: 1px solid;
+  border-radius: $borderRadius;
+}
+
+.label {
   border: 1px solid;
   padding: $defaultPadding calc(1.5 * $defaultPadding);
+
+  &Register,
+  &Login {
+    display: flex;
+    align-items: center;
+  }
 }
 
 .labelText,

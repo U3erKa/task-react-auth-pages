@@ -4,22 +4,46 @@ import { Link } from 'react-router-dom';
 import styles from './SignForm.module.scss';
 
 export default class SignForm extends Component {
-  createInput = (/** @type {string} */ name, /** @type {string} */ placeholder, /** @type {string?} */ type) => (
-    <input
-      className={this.props.isRegisterPage ? styles.inputRegister : styles.inputLogin}
-      type={type || name}
-      name={name}
-      value={this.props[name]}
-      placeholder={placeholder}
-      onChange={this.props.handleChange}
-    />
-  );
+  constructor(props) {
+    super(props);
+    this.state = { passwordType: 'password', confirmPasswordType: 'password' };
+  }
+  createInput = (/** @type {string} */ name, /** @type {string} */ placeholder, /** @type {string?} */ type) =>
+    type === 'password' ? (
+      <label className={this.props.isRegisterPage ? styles.labelRegister : styles.labelLogin}>
+        <input
+          className={this.props.isRegisterPage ? styles.inputRegister : styles.inputLogin}
+          type={this.state[`${name}Type`]}
+          name={name}
+          value={this.props[name]}
+          placeholder={placeholder}
+          onChange={this.props.handleChange}
+        />
+        {type === 'password' && (
+          <button className={styles.passwordBtn} type="button" onClick={() => this.toggleInputType(`${name}Type`)}>
+            👁
+          </button>
+        )}
+      </label>
+    ) : (
+      <input
+        className={this.props.isRegisterPage ? styles.inputRegister : styles.inputLogin}
+        type={type || name}
+        name={name}
+        value={this.props[name]}
+        placeholder={placeholder}
+        onChange={this.props.handleChange}
+      />
+    );
   createCheckbox = (/** @type {string} */ name, /** @type {string} */ placeholder) => (
     <label className={this.props.isRegisterPage ? styles.inputRegisterCheckbox : styles.inputLoginCheckbox}>
       <input type="checkbox" name={name} checked={this.props[name]} onChange={this.props.handleChange} />
       {placeholder}
     </label>
   );
+  toggleInputType(/** @type {string} */ type) {
+    this.setState({ [type]: this.state[type] === 'input' ? 'password' : 'input' });
+  }
 
   render() {
     const { isRegisterPage, ...otherProps } = this.props;
@@ -39,11 +63,11 @@ export class Register extends Component {
         <fieldset className={styles.fieldset}>
           <h1 className={styles.headingRegister}>CREATE AN ACCOUNT</h1>
           <p className={styles.subHeading}>We always keep your name and email address private.</p>
-          {createInput('firstName', 'First Name')}
-          {createInput('lastName', 'Last Name')}
-          {createInput('displayName', 'Display Name')}
+          {createInput('firstName', 'First Name', 'input')}
+          {createInput('lastName', 'Last Name', 'input')}
+          {createInput('displayName', 'Display Name', 'input')}
           {createInput('email', 'Email Address')}
-          {createInput('password', 'Password')}
+          {createInput('password', 'Password', 'password')}
           {createInput('confirmPassword', 'Password Confirmation', 'password')}
           <label className={styles.label}>
             <input type="radio" name="joinAs" value="buyer" checked={joinAs === 'buyer'} onChange={handleChange} />
@@ -83,7 +107,7 @@ export class Login extends Component {
         <fieldset className={styles.fieldset}>
           <h1 className={styles.headingLogin}>LOGIN TO YOUR ACCOUNT</h1>
           {createInput('email', 'Email Address')}
-          {createInput('password', 'Password')}
+          {createInput('password', 'Password', 'password')}
           {createCheckbox('isRemembered', 'Remember me')}
           <Link to={'/forgot-password'} className={styles.forgotPasswordLink}>
             Forgot password
