@@ -1,5 +1,4 @@
-import Home from './Home/Home';
-import LoginRegister from './LoginRegister/LoginRegister';
-import NotFound from './NotFound/NotFound';
-
-export { Home, LoginRegister, NotFound };
+export { default as Home } from './Home/Home';
+export { default as Login } from './LoginRegister/Login';
+export { default as Register } from './LoginRegister/Register';
+export { default as NotFound } from './NotFound/NotFound';

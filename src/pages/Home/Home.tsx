@@ -1,17 +1,13 @@
-import React, { Component } from 'react';
+import { FC } from 'react';
+import { Link } from 'react-router-dom';
 
-interface HomeProps {
-  toggleRegistered: (state: boolean) => void;
-}
-
-class Home extends Component<HomeProps> {
-  componentDidMount() {
-    this.props.toggleRegistered(true);
-  }
-
-  render() {
-    return <main>Homepage</main>;
-  }
-}
+const Home: FC = () => {
+  return (
+    <main>
+      <h1>Homepage</h1>
+      <Link to={'/login'}>Login</Link>
+    </main>
+  );
+};
 
 export default Home;
